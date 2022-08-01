@@ -17,8 +17,8 @@ func GetUser(login string) *model.User {
     key := map[string]*dynamodb.AttributeValue { "login": { S: aws.String(login) } }
 
     params := &dynamodb.GetItemInput {
-        Key:             key,
-        TableName:       aws.String("USERS"),
+        Key:       key,
+        TableName: aws.String("USERS"),
     }
 
     result, err := svc.GetItem(params)
