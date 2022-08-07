@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PauloBet</string>
+    <string name="user">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="save_password">Salvar credenciais</string>
+    <string name="login">Entrar</string>
+</resources>
