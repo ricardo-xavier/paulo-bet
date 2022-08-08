@@ -17,7 +17,6 @@ import okhttp3.Response;
 import xavier.ricardo.paulobet.Config;
 import xavier.ricardo.paulobet.model.LoginRequest;
 import xavier.ricardo.paulobet.MainActivity;
-import xavier.ricardo.paulobet.model.User;
 
 public class LoginTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
@@ -60,7 +59,7 @@ public class LoginTask extends AsyncTask<String, Void, Response> {
         try {
             Gson gson = new Gson();
             LoginRequest loginRequest = new LoginRequest();
-            loginRequest.setLogin(user);
+            loginRequest.setId(user);
             String json = gson.toJson(loginRequest, LoginRequest.class);
             RequestBody body = RequestBody.create(JSON, json);
             Request request = new Request.Builder().url(Config.URL_LOGIN).post(body).build();

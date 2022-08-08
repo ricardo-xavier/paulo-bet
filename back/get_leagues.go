@@ -1,31 +1,22 @@
 package main
 
 import (
-    "fmt"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
     "github.com/aws/aws-lambda-go/lambda"
     "back/model"
     "back/repo"
-    "back/utils"
 )
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-    var loginRequest model.LoginRequest
-    err := json.Unmarshal([]byte(req.Body), &loginRequest)
-    if err != nil {
-        panic(err)
-    }
+    userId := req.PathParameters["userId"]
     svc := repo.Connect()
-    userEntity := repo.GetUser(svc, loginRequest.Id)
-    if userEntity == nil {
-        return utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Id), http.StatusNotFound), nil
+    leagues := repo.GetUserLeagues(svc, userId)
+    getLeaguesResponse := model.GetLeaguesResponse {
+        Leagues: leagues,
     }
-    loginResponse := model.LoginResponse {
-        UserName: userEntity.Name,
-    }
-    body, err := json.Marshal(loginResponse)
+    body, err := json.Marshal(getLeaguesResponse)
     if err != nil {
         panic(err)
     }

@@ -1,13 +1,13 @@
 package xavier.ricardo.paulobet.model;
 
 public class LoginRequest {
-    private String login;
+    private String id;
 
-    public String getLogin() {
-        return login;
+    public String getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setId(String id) {
+        this.id = id;
     }
 }

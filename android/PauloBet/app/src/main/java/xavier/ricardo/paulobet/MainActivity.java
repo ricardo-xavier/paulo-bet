@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import okhttp3.Response;
-import xavier.ricardo.paulobet.model.User;
+import xavier.ricardo.paulobet.model.LoginResponse;
 import xavier.ricardo.paulobet.tasks.LoginTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public void onTaskResponse(Response response) throws IOException {
         if (response.code() == 200) {
             Gson gson = new Gson();
-            User user = gson.fromJson(response.body().string(), User.class);
-            Toast.makeText(this, "Olá " + user.getName(), Toast.LENGTH_LONG).show();
+            LoginResponse loginResponse = gson.fromJson(response.body().string(), LoginResponse.class);
+            Toast.makeText(this, "Olá " + loginResponse.getUserName(), Toast.LENGTH_LONG).show();
             savePreferences();
         } else {
             Toast.makeText(this, "ERRO status " + response.code(), Toast.LENGTH_LONG).show();
