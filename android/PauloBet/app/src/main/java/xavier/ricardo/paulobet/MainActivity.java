@@ -3,6 +3,7 @@ package xavier.ricardo.paulobet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -44,8 +45,12 @@ public class MainActivity extends AppCompatActivity {
         if (response.code() == 200) {
             Gson gson = new Gson();
             LoginResponse loginResponse = gson.fromJson(response.body().string(), LoginResponse.class);
-            Toast.makeText(this, "Olá " + loginResponse.getUserName(), Toast.LENGTH_LONG).show();
             savePreferences();
+            EditText etLogin = (EditText) findViewById(R.id.etLogin);
+            String user = etLogin.getText().toString().trim();;
+            Intent intent = new Intent(this, SelectLeagueActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
         } else {
             Toast.makeText(this, "ERRO status " + response.code(), Toast.LENGTH_LONG).show();
         }
