@@ -1,6 +1,7 @@
 package repo
 
 import (
+    "strings"
     "github.com/aws/aws-sdk-go/aws"
     "github.com/aws/aws-sdk-go/service/dynamodb"
     "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
@@ -35,12 +36,12 @@ func GetUser(svc *dynamodb.DynamoDB, id string) *model.User {
 
 func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
     var leagues []model.League
-	hash := expression.Key("hash").Equal(expression.Value(userId))
 	sort := expression.Key("sort").Equal(expression.Value("LEAGUE"))
+	hash := expression.Key("hash").BeginsWith(userId)
 
-	proj := expression.NamesList(expression.Name("leagueId"))
+	proj := expression.NamesList(expression.Name("hash"))
 
-	expr, err := expression.NewBuilder().WithKeyCondition(hash.And(sort)).WithProjection(proj).Build()
+	expr, err := expression.NewBuilder().WithKeyCondition(sort.And(hash)).WithProjection(proj).Build()
 	if err != nil {
         panic(err)
 	}
@@ -50,6 +51,7 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
 		ExpressionAttributeValues: expr.Values(),
 		KeyConditionExpression:    expr.KeyCondition(),
 		ProjectionExpression:      expr.Projection(),
+        IndexName:                 aws.String("sort-hash-index"),
         TableName:                 aws.String("PAULOBET"),
     }
 
@@ -59,11 +61,10 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
     }
 
 	for _, i := range result.Items {
-		league := model.League{}
-		err = dynamodbattribute.UnmarshalMap(i, &league)
-		if err != nil {
-            panic(err)
-		}
+        leagueId := strings.Split(*i["hash"].S, "_")[1]
+		league := model.League {
+            Id: leagueId,
+        }
 		leagues = append(leagues, league)
 	}
 
