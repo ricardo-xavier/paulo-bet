@@ -46,7 +46,7 @@ public class LeagueAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.league, null);
         League league = leagues.get(i);
-        TextView tvLeague = (TextView) v.findViewById(R.id.tvLeague);
+        TextView tvLeague = v.findViewById(R.id.tvLeague);
         tvLeague.setText(league.getLeagueId());
         return v;
     }

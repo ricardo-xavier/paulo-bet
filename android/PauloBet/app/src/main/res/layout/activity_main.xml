@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    android:paddingLeft="30px"
+    android:paddingTop="50px"
+    android:paddingRight="30px"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvLogin"
@@ -18,7 +21,8 @@
         android:id="@+id/etLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:ems="10">
+
         <requestFocus />
     </EditText>
 
@@ -26,6 +30,7 @@
         android:id="@+id/tvSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
         android:text="@string/password" />
 
     <EditText
@@ -45,7 +50,6 @@
         android:id="@+id/btLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/login"
         android:onClick="login"
         android:text="@string/login" />
 
