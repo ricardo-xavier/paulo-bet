@@ -16,11 +16,11 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard 
     }
 
     u := make(map[string]int)
-    for _, user := range(scores) {
-        userId := user.UserId
+    for i, _ := range(scores) {
+        userId := scores[i].UserId
         if userId != leagueId {
             n := u[userId]
-            gameId := user.GameId
+            gameId := scores[i].GameId
             admin := m[gameId]
 
             wAdmin := 0
@@ -30,17 +30,17 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard 
                 wAdmin = -1
             }
             wUser := 0
-            if user.Home > user.Visitor {
+            if scores[i].Home > scores[i].Visitor {
                 wUser = 1
-            } else if user.Home < user.Visitor {
+            } else if scores[i].Home < scores[i].Visitor {
                 wUser = -1
             }
 
             matches := 0
-            if user.Home == admin.Home {
+            if scores[i].Home == admin.Home {
                 matches++
             }
-            if user.Visitor == admin.Visitor {
+            if scores[i].Visitor == admin.Visitor {
                 matches++
             }
 
@@ -52,6 +52,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard 
                 n = n + matches
             }
 
+            scores[i].Score = n - u[userId]
             u[userId] = n
         }
     }

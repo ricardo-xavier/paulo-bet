@@ -12,7 +12,7 @@ import (
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     leagueId := req.PathParameters["leagueId"]
     svc := repo.Connect()
-    scores := repo.GetScores(svc, leagueId)
+    scores := repo.GetScores(svc, leagueId, nil)
     grouped := GroupByUser(scores, leagueId)
     getScoresResponse := model.GetScoresResponse {
         Scores: grouped,

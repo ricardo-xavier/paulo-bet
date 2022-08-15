@@ -2,7 +2,7 @@ package xavier.ricardo.paulobet.model;
 
 import java.util.List;
 
-public class ScoresResponse {
+public class GetScoresResponse {
     private List<ScoreBoard> scores;
 
     public List<ScoreBoard> getScores() {

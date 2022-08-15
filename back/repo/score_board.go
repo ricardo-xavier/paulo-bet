@@ -9,13 +9,18 @@ import (
     "back/model"
 )
 
-func GetScores(svc *dynamodb.DynamoDB, leagueId string) []model.ScoreBoard {
+func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string) []model.ScoreBoard {
     var scores []model.ScoreBoard
-	sort := expression.Key("sort").Equal(expression.Value(leagueId))
 
+	sort := expression.Key("sort").Equal(expression.Value(leagueId))
 	proj := expression.NamesList(expression.Name("hash"),
         expression.Name("home"),
         expression.Name("visitor"))
+
+    if userId != nil {
+	    hash := expression.Key("hash").BeginsWith(*userId + "_")
+	    sort = expression.KeyAnd(sort, hash)
+    }
 
 	expr, err := expression.NewBuilder().WithKeyCondition(sort).WithProjection(proj).Build()
 	if err != nil {

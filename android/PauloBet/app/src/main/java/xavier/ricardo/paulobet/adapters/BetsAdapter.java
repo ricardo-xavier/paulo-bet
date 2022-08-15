@@ -12,23 +12,23 @@ import java.util.List;
 import xavier.ricardo.paulobet.R;
 import xavier.ricardo.paulobet.model.ScoreBoard;
 
-public class ScoresAdapter extends BaseAdapter {
+public class BetsAdapter extends BaseAdapter {
     private Context context;
-    private List<ScoreBoard> scores;
+    private List<ScoreBoard> bets;
 
-    public ScoresAdapter(Context context, List<ScoreBoard> scores) {
+    public BetsAdapter(Context context, List<ScoreBoard> bets) {
         this.context = context;
-        this.scores = scores;
+        this.bets = bets;
     }
 
     @Override
     public int getCount() {
-        return scores.size();
+        return bets.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return scores.get(i);
+        return bets.get(i);
     }
 
     @Override
@@ -38,14 +38,16 @@ public class ScoresAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if ((scores == null) || (scores.size() <= i)) {
+        if ((bets == null) || (bets.size() <= i)) {
             return null;
         }
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.scoreboard, null);
-        ScoreBoard scoreBoard = scores.get(i);
-        TextView tvUser = v.findViewById(R.id.tvUser);
-        tvUser.setText(scoreBoard.getUserId());
+        View v = inflater.inflate(R.layout.bet, null);
+        ScoreBoard scoreBoard = bets.get(i);
+        TextView tvGame = v.findViewById(R.id.tvGame);
+        tvGame.setText(scoreBoard.getGameId());
+        TextView tvBet = v.findViewById(R.id.tvBet);
+        tvBet.setText(scoreBoard.getHome() + " x " + scoreBoard.getVisitor());
         TextView tvScore = v.findViewById(R.id.tvScore);
         tvScore.setText(scoreBoard.getScore().toString());
         return v;

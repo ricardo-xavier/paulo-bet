@@ -9,7 +9,7 @@ import (
 func main() {
     leagueId := os.Args[1]
     svc := repo.Connect()
-    scores := repo.GetScores(svc, leagueId)
+    scores := repo.GetScores(svc, leagueId, nil)
     grouped := GroupByUser(scores, leagueId)
     fmt.Println(grouped)
 }

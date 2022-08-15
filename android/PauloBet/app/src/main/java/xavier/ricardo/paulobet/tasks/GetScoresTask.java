@@ -1,7 +1,6 @@
 package xavier.ricardo.paulobet.tasks;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -11,21 +10,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import xavier.ricardo.paulobet.Config;
-import xavier.ricardo.paulobet.ScoresActivity;
+import xavier.ricardo.paulobet.GetScoresActivity;
 
-public class ScoresTask extends AsyncTask<String, Void, Response> {
+public class GetScoresTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
-    private ScoresActivity context;
+    private GetScoresActivity context;
     private String league;
 
-    public ScoresTask(ScoresActivity context, String league) {
+    public GetScoresTask(GetScoresActivity context, String league) {
         this.context = context;
         this.league = league;
     }
 
     @Override
     protected void onPreExecute() {
-        progress = new ProgressDialog((Context) context);
+        progress = new ProgressDialog(context);
         progress.setMessage("Aguarde...");
         progress.show();
         super.onPreExecute();
@@ -50,7 +49,7 @@ public class ScoresTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Request request = new Request.Builder().url(Config.URL_SCORES + league).get().build();
+            Request request = new Request.Builder().url(Config.URL_GET_SCORES + league).get().build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();

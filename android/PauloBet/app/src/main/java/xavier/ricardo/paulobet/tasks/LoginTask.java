@@ -1,7 +1,6 @@
 package xavier.ricardo.paulobet.tasks;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
@@ -32,7 +31,7 @@ public class LoginTask extends AsyncTask<String, Void, Response> {
 
     @Override
     protected void onPreExecute() {
-        progress = new ProgressDialog((Context) context);
+        progress = new ProgressDialog(context);
         progress.setMessage("Aguarde...");
         progress.show();
         super.onPreExecute();

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".GetScoresActivity">
+    tools:context=".GetBetsActivity">
 
     <ListView
-        android:id="@+id/lvScores"
+        android:id="@+id/lvBets"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

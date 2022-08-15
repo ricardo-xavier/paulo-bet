@@ -10,15 +10,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import xavier.ricardo.paulobet.Config;
-import xavier.ricardo.paulobet.SelectLeagueActivity;
+import xavier.ricardo.paulobet.GetBetsActivity;
 
-public class GetLeaguesTask extends AsyncTask<String, Void, Response> {
+public class GetBetsTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
-    private SelectLeagueActivity context;
+    private GetBetsActivity context;
+    private String league;
     private String user;
 
-    public GetLeaguesTask(SelectLeagueActivity context, String user) {
+    public GetBetsTask(GetBetsActivity context, String league, String user) {
         this.context = context;
+        this.league = league;
         this.user = user;
     }
 
@@ -49,7 +51,7 @@ public class GetLeaguesTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Request request = new Request.Builder().url(Config.URL_GET_LEAGUES + user).get().build();
+            Request request = new Request.Builder().url(Config.URL_GET_BETS + league + "/" + user).get().build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();

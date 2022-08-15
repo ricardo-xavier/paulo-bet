@@ -36,7 +36,7 @@ public class SelectLeagueActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 League league = (League) adapterView.getAdapter().getItem(i);
-                Intent intent = new Intent(context, ScoresActivity.class);
+                Intent intent = new Intent(context, GetScoresActivity.class);
                 intent.putExtra("league", league.getLeagueId());
                 startActivity(intent);
                 System.out.println(i);
