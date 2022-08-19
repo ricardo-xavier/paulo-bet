@@ -13,9 +13,7 @@ import java.io.IOException;
 
 import okhttp3.Response;
 import xavier.ricardo.paulobet.adapters.BetsAdapter;
-import xavier.ricardo.paulobet.adapters.ScoresAdapter;
 import xavier.ricardo.paulobet.model.GetBetsResponse;
-import xavier.ricardo.paulobet.model.GetScoresResponse;
 import xavier.ricardo.paulobet.tasks.GetBetsTask;
 
 public class GetBetsActivity extends AppCompatActivity {
@@ -28,8 +26,10 @@ public class GetBetsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String league = intent.getStringExtra("league");
         String user = intent.getStringExtra("user");
+        String login = intent.getStringExtra("login");
+        String token = intent.getStringExtra("token");
 
-        new GetBetsTask(this, league, user).execute();
+        new GetBetsTask(this, league, user, login, token).execute();
     }
 
     public void onTaskResponse(Response response) throws IOException {

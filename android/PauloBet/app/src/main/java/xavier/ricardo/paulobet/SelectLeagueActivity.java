@@ -30,6 +30,7 @@ public class SelectLeagueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_league);
         Intent intent = getIntent();
         String user = intent.getStringExtra("user");
+        String token = intent.getStringExtra("token");
 
         ListView lvLeagues = findViewById(R.id.lvLeagues);
         lvLeagues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -38,12 +39,14 @@ public class SelectLeagueActivity extends AppCompatActivity {
                 League league = (League) adapterView.getAdapter().getItem(i);
                 Intent intent = new Intent(context, GetScoresActivity.class);
                 intent.putExtra("league", league.getLeagueId());
+                intent.putExtra("user", user);
+                intent.putExtra("token", token);
                 startActivity(intent);
                 System.out.println(i);
             }
         });
 
-        new GetLeaguesTask(this, user).execute();
+        new GetLeaguesTask(this, user, token).execute();
     }
 
     public void onTaskResponse(Response response) throws IOException {

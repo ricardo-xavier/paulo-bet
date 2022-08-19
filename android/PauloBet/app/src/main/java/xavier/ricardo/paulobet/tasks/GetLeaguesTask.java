@@ -16,10 +16,12 @@ public class GetLeaguesTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
     private SelectLeagueActivity context;
     private String user;
+    private String token;
 
-    public GetLeaguesTask(SelectLeagueActivity context, String user) {
+    public GetLeaguesTask(SelectLeagueActivity context, String user, String token) {
         this.context = context;
         this.user = user;
+        this.token = token;
     }
 
     @Override
@@ -49,7 +51,9 @@ public class GetLeaguesTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Request request = new Request.Builder().url(Config.URL_GET_LEAGUES + user).get().build();
+            Request request = new Request.Builder()
+                    .url(Config.URL_GET_LEAGUES + user + "?token=" + token)
+                    .get().build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();

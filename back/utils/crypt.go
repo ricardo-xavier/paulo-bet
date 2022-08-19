@@ -8,7 +8,7 @@ import (
     "github.com/aws/aws-sdk-go/service/ssm"
 )
 
-func crypt(text string) string {
+func Crypt(text string) string {
     hash := md5.Sum([]byte(text))
     return hex.EncodeToString(hash[:])
 }
@@ -31,12 +31,12 @@ func BuildToken(user string) string {
     currentTime := time.Now()
     date := currentTime.Format("02-01-2006")
     secret := getSecret("paulobet-secret")
-    return crypt(secret + ":" + user + ":" + date)
+    return Crypt(secret + ":" + user + ":" + date)
 }
 
 func CheckToken(user string, token string) bool {
     currentTime := time.Now()
     date := currentTime.Format("02-01-2006")
     secret := getSecret("paulobet-secret")
-    return token == crypt(secret + ":" + user + ":" + date)
+    return token == Crypt(secret + ":" + user + ":" + date)
 }

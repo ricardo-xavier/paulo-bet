@@ -1,17 +1,25 @@
 package main
 
 import (
+    "fmt"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
     "github.com/aws/aws-lambda-go/lambda"
     "back/model"
     "back/repo"
+    "back/utils"
 )
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     leagueId := req.PathParameters["leagueId"]
     userId := req.PathParameters["userId"]
+    login := req.QueryStringParameters["login"]
+    token := req.QueryStringParameters["token"]
+    ok := utils.CheckToken(login, token)
+    if !ok {
+        return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
+    }
     svc := repo.Connect()
     userScores := repo.GetScores(svc, leagueId, &userId)
     leagueScores := repo.GetScores(svc, leagueId, &leagueId)

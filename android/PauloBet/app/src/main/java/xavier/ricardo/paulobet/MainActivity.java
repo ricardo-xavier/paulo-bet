@@ -47,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
             LoginResponse loginResponse = gson.fromJson(response.body().string(), LoginResponse.class);
             savePreferences();
             EditText etLogin = (EditText) findViewById(R.id.etLogin);
-            String user = etLogin.getText().toString().trim();;
+            String user = etLogin.getText().toString().trim();
             Intent intent = new Intent(this, SelectLeagueActivity.class);
             intent.putExtra("user", user);
+            intent.putExtra("token", loginResponse.getToken());
             startActivity(intent);
         } else {
             Toast.makeText(this, "ERRO status " + response.code(), Toast.LENGTH_LONG).show();

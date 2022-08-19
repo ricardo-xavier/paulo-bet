@@ -29,6 +29,8 @@ public class GetScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scores);
         Intent intent = getIntent();
         String league = intent.getStringExtra("league");
+        String user = intent.getStringExtra("user");
+        String token = intent.getStringExtra("token");
 
         ListView lvScores = findViewById(R.id.lvScores);
         lvScores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -38,12 +40,14 @@ public class GetScoresActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, GetBetsActivity.class);
                 intent.putExtra("league", league);
                 intent.putExtra("user", score.getUserId());
+                intent.putExtra("login", user);
+                intent.putExtra("token", token);
                 startActivity(intent);
                 System.out.println(i);
             }
         });
 
-        new GetScoresTask(this, league).execute();
+        new GetScoresTask(this, league, user, token).execute();
     }
 
     public void onTaskResponse(Response response) throws IOException {

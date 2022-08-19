@@ -17,11 +17,15 @@ public class GetBetsTask extends AsyncTask<String, Void, Response> {
     private GetBetsActivity context;
     private String league;
     private String user;
+    private String login;
+    private String token;
 
-    public GetBetsTask(GetBetsActivity context, String league, String user) {
+    public GetBetsTask(GetBetsActivity context, String league, String user, String login, String token) {
         this.context = context;
         this.league = league;
         this.user = user;
+        this.login = login;
+        this.token = token;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class GetBetsTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Request request = new Request.Builder().url(Config.URL_GET_BETS + league + "/" + user).get().build();
+            Request request = new Request.Builder().url(Config.URL_GET_BETS + league + "/" + user + "?token=" + token + "&login=" + login).get().build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();
