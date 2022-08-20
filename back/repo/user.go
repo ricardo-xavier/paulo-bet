@@ -70,3 +70,22 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
 
     return leagues
 }
+
+func ChangePassword(svc *dynamodb.DynamoDB, id string, password string) {
+    key := map[string]*dynamodb.AttributeValue { "hash": { S: aws.String(id) }, "sort": { S: aws.String("USER") } }
+    values := map[string]*dynamodb.AttributeValue { ":p": { S: aws.String(password) } }
+
+
+	params := &dynamodb.UpdateItemInput{
+		Key:                       key,
+        TableName:                 aws.String("PAULOBET"),
+		UpdateExpression:          aws.String("set password=:p"),
+        ExpressionAttributeValues: values,
+		ReturnValues:              aws.String("UPDATED_NEW"),
+	}
+
+	_, err := svc.UpdateItem(params)
+	if err != nil {
+		panic(err)
+	}
+}

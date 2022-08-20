@@ -17,6 +17,8 @@ func main() {
     if userEntity == nil {
         panic(fmt.Errorf("%s", userId))
     }
+fmt.Printf("[%s]\n", userEntity.Password)
+fmt.Printf("[%s]\n", utils.Crypt(password))
     if userEntity.Password != utils.Crypt(password) && !(userEntity.Password == "" && password == "") {
         panic(fmt.Errorf("[%s] [%s]", userEntity.Password, utils.Crypt(password)))
     }

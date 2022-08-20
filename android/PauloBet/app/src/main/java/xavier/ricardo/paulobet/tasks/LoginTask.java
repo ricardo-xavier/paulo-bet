@@ -21,12 +21,14 @@ public class LoginTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
     private MainActivity context;
     private String user;
+    private String password;
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public LoginTask(MainActivity context, String user, String password) {
         this.context = context;
         this.user = user;
+        this.password = password;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class LoginTask extends AsyncTask<String, Void, Response> {
             Gson gson = new Gson();
             LoginRequest loginRequest = new LoginRequest();
             loginRequest.setId(user);
+            loginRequest.setPassword(password);
             String json = gson.toJson(loginRequest, LoginRequest.class);
             RequestBody body = RequestBody.create(JSON, json);
             Request request = new Request.Builder().url(Config.URL_LOGIN).post(body).build();
