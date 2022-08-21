@@ -3,32 +3,27 @@ package xavier.ricardo.paulobet.tasks;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import xavier.ricardo.paulobet.Config;
-import xavier.ricardo.paulobet.model.LoginRequest;
-import xavier.ricardo.paulobet.MainActivity;
+import xavier.ricardo.paulobet.RankingActivity;
 
-public class LoginTask extends AsyncTask<String, Void, Response> {
+public class RankingTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
-    private MainActivity context;
+    private RankingActivity context;
+    private String league;
     private String user;
-    private String password;
+    private String token;
 
-    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    public LoginTask(MainActivity context, String user, String password) {
+    public RankingTask(RankingActivity context, String league, String user, String token) {
         this.context = context;
+        this.league = league;
         this.user = user;
-        this.password = password;
+        this.token = token;
     }
 
     @Override
@@ -58,13 +53,7 @@ public class LoginTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Gson gson = new Gson();
-            LoginRequest loginRequest = new LoginRequest();
-            loginRequest.setLogin(user);
-            loginRequest.setPassword(password);
-            String json = gson.toJson(loginRequest, LoginRequest.class);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder().url(Config.URL_LOGIN).post(body).build();
+            Request request = new Request.Builder().url(Config.URL_RANKING + league + "?token=" + token + "&login=" + user).get().build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();

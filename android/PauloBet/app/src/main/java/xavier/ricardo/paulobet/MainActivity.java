@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onTaskResponse(Response response) throws IOException {
+        if (response == null) {
+            Toast.makeText(this, "Sem resposta so servidor. Tente novamente mais tarde.", Toast.LENGTH_LONG).show();
+            return;
+        }
         if (response.code() == 200) {
             Gson gson = new Gson();
             LoginResponse loginResponse = gson.fromJson(response.body().string(), LoginResponse.class);

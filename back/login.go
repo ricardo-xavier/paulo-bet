@@ -18,16 +18,16 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         panic(err)
     }
     svc := repo.Connect()
-    userEntity := repo.GetUser(svc, loginRequest.Id)
+    userEntity := repo.GetUser(svc, loginRequest.Login)
     if userEntity == nil {
-        return utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Id), http.StatusNotFound), nil
+        return utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Login), http.StatusNotFound), nil
     }
     if userEntity.Password != utils.Crypt(loginRequest.Password) && !(userEntity.Password == "" && loginRequest.Password == "") {
-        return utils.ErrorResponse(fmt.Errorf("Invalid password"), http.StatusUnauthorized), nil
+        return utils.ErrorResponse(fmt.Errorf("Invalid password"), http.StatusBadRequest), nil
     }
     loginResponse := model.LoginResponse {
         UserName: userEntity.Name,
-        Token: utils.BuildToken(loginRequest.Id),
+        Token: utils.BuildToken(loginRequest.Login),
     }
     body, err := json.Marshal(loginResponse)
     if err != nil {

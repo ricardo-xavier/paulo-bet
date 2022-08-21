@@ -3,26 +3,33 @@ package xavier.ricardo.paulobet.tasks;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import xavier.ricardo.paulobet.ChangePasswordActivity;
 import xavier.ricardo.paulobet.Config;
-import xavier.ricardo.paulobet.GetScoresActivity;
+import xavier.ricardo.paulobet.model.ChangePasswordRequest;
 
-public class GetScoresTask extends AsyncTask<String, Void, Response> {
+public class ChangePasswordTask extends AsyncTask<String, Void, Response> {
     private ProgressDialog progress;
-    private GetScoresActivity context;
-    private String league;
+    private ChangePasswordActivity context;
     private String user;
+    private String password;
     private String token;
 
-    public GetScoresTask(GetScoresActivity context, String league, String user, String token) {
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    public ChangePasswordTask(ChangePasswordActivity context, String user, String password, String token) {
         this.context = context;
-        this.league = league;
         this.user = user;
+        this.password = password;
         this.token = token;
     }
 
@@ -53,7 +60,14 @@ public class GetScoresTask extends AsyncTask<String, Void, Response> {
     @Override
     protected Response doInBackground(String... params) {
         try {
-            Request request = new Request.Builder().url(Config.URL_GET_SCORES + league + "?token=" + token + "&userId=" + user).get().build();
+            Gson gson = new Gson();
+            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest();
+            changePasswordRequest.setLogin(user);
+            changePasswordRequest.setPassword(password);
+            changePasswordRequest.setToken(token);
+            String json = gson.toJson(changePasswordRequest, ChangePasswordRequest.class);
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder().url(Config.URL_LOGIN).patch(body).build();
             OkHttpClient client = new OkHttpClient.Builder().build();
             Call call = client.newCall(request);
             return call.execute();

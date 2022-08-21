@@ -12,17 +12,23 @@ import (
 )
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-    var changePasswordRequest model.ChangePasswordRequest
-    err := json.Unmarshal([]byte(req.Body), &changePasswordRequest)
+    fmt.Println("=====PauloBet:bet")
+    leagueId := req.PathParameters["leagueId"]
+    userId := req.PathParameters["userId"]
+    fmt.Println(leagueId)
+    fmt.Println(userId)
+    var betRequest model.BetRequest
+    err := json.Unmarshal([]byte(req.Body), &betRequest)
     if err != nil {
         panic(err)
     }
-    ok := utils.CheckToken(changePasswordRequest.Login, changePasswordRequest.Token)
+    fmt.Println(betRequest)
+    ok := utils.CheckToken(userId, betRequest.Token)
     if !ok {
         return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
     }
     svc := repo.Connect()
-    repo.ChangePassword(svc, changePasswordRequest.Login, utils.Crypt(changePasswordRequest.Password))
+    repo.UpdateBet(svc, leagueId, userId, betRequest.MatchId, betRequest.Home, betRequest.Visitors)
     return events.APIGatewayProxyResponse {
         StatusCode: http.StatusNoContent,
     }, nil

@@ -1,8 +1,9 @@
 package xavier.ricardo.paulobet.model;
 
-public class LoginRequest {
+public class ChangePasswordRequest {
     private String login;
     private String password;
+    private String token;
 
     public String getLogin() {
         return login;
@@ -18,5 +19,13 @@ public class LoginRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

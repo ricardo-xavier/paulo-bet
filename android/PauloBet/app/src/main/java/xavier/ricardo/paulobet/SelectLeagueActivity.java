@@ -22,6 +22,8 @@ import xavier.ricardo.paulobet.tasks.GetLeaguesTask;
 public class SelectLeagueActivity extends AppCompatActivity {
 
     private SelectLeagueActivity context;
+    private String user;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +31,15 @@ public class SelectLeagueActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_select_league);
         Intent intent = getIntent();
-        String user = intent.getStringExtra("user");
-        String token = intent.getStringExtra("token");
+        user = intent.getStringExtra("user");
+        token = intent.getStringExtra("token");
 
         ListView lvLeagues = findViewById(R.id.lvLeagues);
         lvLeagues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 League league = (League) adapterView.getAdapter().getItem(i);
-                Intent intent = new Intent(context, GetScoresActivity.class);
+                Intent intent = new Intent(context, RankingActivity.class);
                 intent.putExtra("league", league.getLeagueId());
                 intent.putExtra("user", user);
                 intent.putExtra("token", token);
@@ -50,6 +52,10 @@ public class SelectLeagueActivity extends AppCompatActivity {
     }
 
     public void onTaskResponse(Response response) throws IOException {
+        if (response == null) {
+            Toast.makeText(this, "Sem resposta so servidor. Tente novamente mais tarde.", Toast.LENGTH_LONG).show();
+            return;
+        }
         if (response.code() == 200) {
             String body = response.body().string();
             Gson gson = new Gson();
@@ -60,5 +66,12 @@ public class SelectLeagueActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "ERRO status " + response.code(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void changePassword(View v) {
+        Intent intent = new Intent(context, ChangePasswordActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("token", token);
+        startActivity(intent);
     }
 }

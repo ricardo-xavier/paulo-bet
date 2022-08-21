@@ -1,0 +1,120 @@
+LOGIN
+=====
+curl --location --request POST 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "login": "ricardo.xavier",
+    "password": "a"
+}'
+
+status 200
+{
+    "userName": "Ricardo Costa Xavier",
+    "token": "02bd3fd470ac3f03fca11337f5696c25"
+}
+
+status 404 - usuario nao encontrado, retorna um texto plano com o login
+status 400 - senha incorreta, retorna um texto plano com a mensagem Invalid password
+
+ALTERACAO DE SENHA
+==================
+curl --location --request PATCH 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "login": "ricardo.xavier",
+    "password": "b",
+    "token": "02bd3fd470ac3f03fca11337f5696c25"
+}'
+
+status 401 - token invalido
+status 204 - senha alterada
+
+LISTA OS BOLOES QUE O USUARIO ESTA PARTICIPANDO
+===============================================
+curl --location --request GET 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/leagues/ricardo.xavier?token=02bd3fd470ac3f03fca11337f5696c25'
+
+status 401 - token invalido
+status 200 - ok - retorma os ids dos boloes
+{
+    "leagues": [
+        {
+            "leagueId": "COPA-BRASIL"
+        },
+        {
+            "leagueId": "RETRO0508"
+        }
+    ]
+}
+
+
+RETORNA A CLASSIFICACAO
+=======================
+curl --location --request GET 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/ranking/COPA-BRASIL?token=02bd3fd470ac3f03fca11337f5696c25&login=ricardo.xavier'
+
+status 200 - retorna o ranking
+{
+    "ranking": [
+        {
+            "userId": "ricardo.xavier",
+            "score": 40
+        }
+    ]
+}
+
+RETORNA AS APOSTAS DE UM USUARIO
+================================
+curl --location --request GET 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/bets/COPA-BRASIL/ricardo.xavier?token=02bd3fd470ac3f03fca11337f5696c25&login=ricardo.xavier'
+
+{
+    "bets": [
+        {
+            "userId": "ricardo.xavier",
+            "matchId": "COR-FLU",
+            "home": 2,
+            "visitors": 1,
+            "score": 0,
+            "date": "",
+            "editable": true
+        },
+        {
+            "userId": "ricardo.xavier",
+            "matchId": "FLA-SAO",
+            "home": 0,
+            "visitors": 0,
+            "score": 10,
+            "date": "",
+            "editable": true
+        },
+        {
+            "userId": "ricardo.xavier",
+            "matchId": "FLU-COR",
+            "home": 0,
+            "visitors": 0,
+            "score": 10,
+            "date": "",
+            "editable": true
+        },
+        {
+            "userId": "ricardo.xavier",
+            "matchId": "SAO-FLA",
+            "home": 0,
+            "visitors": 0,
+            "score": 10,
+            "date": "",
+            "editable": true
+        }
+    ]
+}
+
+REGISTRA UMA APOSTA DE UM USUARIO
+=================================
+curl --location --request POST 'https://bocykia5x4.execute-api.sa-east-1.amazonaws.com/production/bets/COPA-BRASIL/ricardo.xavier' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "matchId": "COR-FLU", 
+    "home": 2, "visitors": 3, 
+    "token": "02bd3fd470ac3f03fca11337f5696c25" 
+}
+'
+
+status 204 - aposta registrada

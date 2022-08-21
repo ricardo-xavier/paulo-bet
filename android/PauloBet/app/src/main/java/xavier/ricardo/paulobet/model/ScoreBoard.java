@@ -2,10 +2,12 @@ package xavier.ricardo.paulobet.model;
 
 public class ScoreBoard {
     private String userId;
-    private String gameId;
+    private String matchId;
     private Integer home;
-    private Integer visitor;
+    private Integer visitors;
     private Integer score;
+    private Boolean editable;
+    private String date;
 
     public String getUserId() {
         return userId;
@@ -15,12 +17,12 @@ public class ScoreBoard {
         this.userId = userId;
     }
 
-    public String getGameId() {
-        return gameId;
+    public String getMatchId() {
+        return matchId;
     }
 
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
     }
 
     public Integer getHome() {
@@ -31,12 +33,12 @@ public class ScoreBoard {
         this.home = home;
     }
 
-    public Integer getVisitor() {
-        return visitor;
+    public Integer getVisitors() {
+        return visitors;
     }
 
-    public void setVisitor(Integer visitor) {
-        this.visitor = visitor;
+    public void setVisitors(Integer visitors) {
+        this.visitors = visitors;
     }
 
     public Integer getScore() {
@@ -47,4 +49,19 @@ public class ScoreBoard {
         this.score = score;
     }
 
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

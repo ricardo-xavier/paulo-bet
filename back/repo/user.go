@@ -9,9 +9,12 @@ import (
     "back/model"
 )
 
-func GetUser(svc *dynamodb.DynamoDB, id string) *model.User {
+func GetUser(svc *dynamodb.DynamoDB, login string) *model.User {
     user := model.User{}
-    key := map[string]*dynamodb.AttributeValue { "hash": { S: aws.String(id) }, "sort": { S: aws.String("USER") } }
+    key := map[string]*dynamodb.AttributeValue {
+        "hash": { S: aws.String(login) },
+        "sort": { S: aws.String("USER") },
+    }
 
     params := &dynamodb.GetItemInput {
         Key:       key,
@@ -63,7 +66,7 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
 	for _, i := range result.Items {
         leagueId := strings.Split(*i["hash"].S, "_")[1]
 		league := model.League {
-            Id: leagueId,
+            LeagueId: leagueId,
         }
 		leagues = append(leagues, league)
 	}
@@ -71,15 +74,17 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
     return leagues
 }
 
-func ChangePassword(svc *dynamodb.DynamoDB, id string, password string) {
-    key := map[string]*dynamodb.AttributeValue { "hash": { S: aws.String(id) }, "sort": { S: aws.String("USER") } }
-    values := map[string]*dynamodb.AttributeValue { ":p": { S: aws.String(password) } }
-
+func ChangePassword(svc *dynamodb.DynamoDB, login string, password string) {
+    key := map[string]*dynamodb.AttributeValue {
+        "hash": { S: aws.String(login) },
+        "sort": { S: aws.String("USER") },
+    }
+    values := map[string]*dynamodb.AttributeValue { ":password": { S: aws.String(password) } }
 
 	params := &dynamodb.UpdateItemInput{
 		Key:                       key,
         TableName:                 aws.String("PAULOBET"),
-		UpdateExpression:          aws.String("set password=:p"),
+		UpdateExpression:          aws.String("set password=:password"),
         ExpressionAttributeValues: values,
 		ReturnValues:              aws.String("UPDATED_NEW"),
 	}

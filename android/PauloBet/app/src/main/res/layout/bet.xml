@@ -1,42 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvGame"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/ibEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="10px"
             android:layout_marginTop="20px"
             android:layout_marginBottom="20px"
-            android:text="GAME"
+            android:onClick="bet"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="20px"
+            android:text="DATE"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tvMatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="20px"
+            android:text="MATCH"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/tvBet"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="10px"
             android:layout_marginTop="20px"
             android:layout_marginBottom="20px"
+            android:background="#FF9800"
+            android:gravity="center"
             android:text="BET"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/tvScore"
-            android:gravity="right"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20px"
             android:layout_marginTop="20px"
+            android:layout_marginRight="10px"
             android:layout_marginBottom="20px"
+            android:gravity="right"
             android:text="SCORE"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

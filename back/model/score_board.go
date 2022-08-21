@@ -2,8 +2,10 @@ package model
 
 type ScoreBoard struct {
     UserId string `json:"userId"`
-    GameId string `json:"gameId"`
+    MatchId string `json:"matchId"`
     Home int `json:"home"`
-    Visitor int `json:"visitor"`
+    Visitors int `json:"visitors"`
     Score int `json:"score"`
+    Date string `json:"date"`
+    Editable bool `json:"editable"`
 }

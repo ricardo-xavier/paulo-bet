@@ -1,0 +1,22 @@
+
+    AMG = América-MG
+    BAH = Bahia
+    BOT = Botafogo
+    CAM = Atlético-MG
+    CAP = Atlético-PR
+    CEA = Ceará
+    CHA = Chapecoense
+    COR = Corinthians
+    CRU = Cruzeiro
+    FLA = Flamengo
+    FLU = Fluminense
+    GRE = Grêmio
+    INT = Internacional
+    PAL = Palmeiras
+    PAR = Paraná
+    SAN = Santos
+    SAO = São Paulo
+    SPO = Sport
+    VAS = Vasco da Gama
+    VIT = Vitória
+

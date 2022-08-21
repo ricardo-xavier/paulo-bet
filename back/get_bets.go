@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "sort"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
@@ -27,13 +28,16 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     for _, score := range(leagueScores) {
         scores = append(scores, score)
     }
-    GroupByUser(scores, leagueId)
+    GroupByUser(scores, leagueId, userId)
     userScores = nil
     for _, score := range(scores) {
         if score.UserId == userId {
             userScores = append(userScores, score)
         }
     }
+    sort.SliceStable(userScores, func(i, j int) bool {
+        return userScores[i].Date < userScores[j].Date
+    })
     getBetsResponse := model.GetBetsResponse {
         Bets: userScores,
     }

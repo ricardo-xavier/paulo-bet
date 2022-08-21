@@ -2,37 +2,48 @@ package main
 
 import (
     "sort"
+    "time"
     "back/model"
 )
 
-func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard {
+func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []model.ScoreBoard {
     m := make(map[string]model.ScoreBoard)
     for _, scoreBoard := range(scores) {
         userId := scoreBoard.UserId
         if userId == leagueId {
-            gameId := scoreBoard.GameId
-            m[gameId] = scoreBoard
+            matchId := scoreBoard.MatchId
+            m[matchId] = scoreBoard
         }
     }
 
     u := make(map[string]int)
     for i, _ := range(scores) {
         userId := scores[i].UserId
+        if userId != login {
+            scores[i].Editable = false
+        } else {
+            matchId := scores[i].MatchId
+            admin := m[matchId]
+            loc, _ := time.LoadLocation("America/Sao_Paulo")
+            currentTime := time.Now().In(loc)
+            date := currentTime.Format("2006-01-02 15:04:05")
+            scores[i].Editable = date < admin.Date
+        }
         if userId != leagueId {
             n := u[userId]
-            gameId := scores[i].GameId
-            admin := m[gameId]
+            matchId := scores[i].MatchId
+            admin := m[matchId]
 
             wAdmin := 0
-            if admin.Home > admin.Visitor {
+            if admin.Home > admin.Visitors {
                 wAdmin = 1
-            } else if admin.Home < admin.Visitor {
+            } else if admin.Home < admin.Visitors {
                 wAdmin = -1
             }
             wUser := 0
-            if scores[i].Home > scores[i].Visitor {
+            if scores[i].Home > scores[i].Visitors {
                 wUser = 1
-            } else if scores[i].Home < scores[i].Visitor {
+            } else if scores[i].Home < scores[i].Visitors {
                 wUser = -1
             }
 
@@ -40,7 +51,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard 
             if scores[i].Home == admin.Home {
                 matches++
             }
-            if scores[i].Visitor == admin.Visitor {
+            if scores[i].Visitors == admin.Visitors {
                 matches++
             }
 
@@ -52,6 +63,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string) []model.ScoreBoard 
                 n = n + matches
             }
 
+            scores[i].Date = admin.Date[5:16]
             scores[i].Score = n - u[userId]
             u[userId] = n
         }

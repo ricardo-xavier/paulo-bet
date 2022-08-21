@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,10 +45,17 @@ public class BetsAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.bet, null);
         ScoreBoard scoreBoard = bets.get(i);
-        TextView tvGame = v.findViewById(R.id.tvGame);
-        tvGame.setText(scoreBoard.getGameId());
+        ImageButton ibEdit = v.findViewById(R.id.ibEdit);
+        if (Boolean.FALSE.equals(scoreBoard.getEditable())) {
+            ibEdit.setVisibility(View.INVISIBLE);
+        }
+        ibEdit.setTag(scoreBoard);
+        TextView tvDate = v.findViewById(R.id.tvDate);
+        tvDate.setText(scoreBoard.getDate());
+        TextView tvMatch = v.findViewById(R.id.tvMatch);
+        tvMatch.setText(scoreBoard.getMatchId());
         TextView tvBet = v.findViewById(R.id.tvBet);
-        tvBet.setText(scoreBoard.getHome() + " x " + scoreBoard.getVisitor());
+        tvBet.setText(scoreBoard.getHome() + " x " + scoreBoard.getVisitors());
         TextView tvScore = v.findViewById(R.id.tvScore);
         tvScore.setText(scoreBoard.getScore().toString());
         return v;

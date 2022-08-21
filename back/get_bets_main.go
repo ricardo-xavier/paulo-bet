@@ -16,7 +16,7 @@ func main() {
     for _, score := range(leagueScores) {
         scores = append(scores, score)
     }
-    GroupByUser(scores, leagueId)
+    GroupByUser(scores, leagueId, userId)
     userScores = nil
     for _, score := range(scores) {
         if score.UserId == userId {

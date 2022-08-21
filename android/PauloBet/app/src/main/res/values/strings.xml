@@ -4,4 +4,9 @@
     <string name="password">Senha</string>
     <string name="save_password">Salvar credenciais</string>
     <string name="login">Entrar</string>
+    <string name="change_password">Alterar senha</string>
+    <string name="new_password">Nova senha</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="confirm">Confirmar</string>
+
 </resources>

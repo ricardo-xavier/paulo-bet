@@ -14,13 +14,13 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import okhttp3.Response;
-import xavier.ricardo.paulobet.adapters.ScoresAdapter;
-import xavier.ricardo.paulobet.model.GetScoresResponse;
-import xavier.ricardo.paulobet.model.ScoreBoard;
-import xavier.ricardo.paulobet.tasks.GetScoresTask;
+import xavier.ricardo.paulobet.adapters.RankingAdapter;
+import xavier.ricardo.paulobet.model.Ranking;
+import xavier.ricardo.paulobet.model.RankingResponse;
+import xavier.ricardo.paulobet.tasks.RankingTask;
 
-public class GetScoresActivity extends AppCompatActivity {
-    private GetScoresActivity context;
+public class RankingActivity extends AppCompatActivity {
+    private RankingActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +36,10 @@ public class GetScoresActivity extends AppCompatActivity {
         lvScores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ScoreBoard score = (ScoreBoard) adapterView.getAdapter().getItem(i);
+                Ranking ranking = (Ranking) adapterView.getAdapter().getItem(i);
                 Intent intent = new Intent(context, GetBetsActivity.class);
                 intent.putExtra("league", league);
-                intent.putExtra("user", score.getUserId());
+                intent.putExtra("user", ranking.getUserId());
                 intent.putExtra("login", user);
                 intent.putExtra("token", token);
                 startActivity(intent);
@@ -47,16 +47,20 @@ public class GetScoresActivity extends AppCompatActivity {
             }
         });
 
-        new GetScoresTask(this, league, user, token).execute();
+        new RankingTask(this, league, user, token).execute();
     }
 
     public void onTaskResponse(Response response) throws IOException {
+        if (response == null) {
+            Toast.makeText(this, "Sem resposta so servidor. Tente novamente mais tarde.", Toast.LENGTH_LONG).show();
+            return;
+        }
         if (response.code() == 200) {
             String body = response.body().string();
             Gson gson = new Gson();
-            GetScoresResponse scoresResponse = gson.fromJson(body, GetScoresResponse.class);
+            RankingResponse rankingResponse = gson.fromJson(body, RankingResponse.class);
             ListView lvScores = findViewById(R.id.lvScores);
-            ScoresAdapter adapter = new ScoresAdapter(this, scoresResponse.getScores());
+            RankingAdapter adapter = new RankingAdapter(this, rankingResponse.getRanking());
             lvScores.setAdapter(adapter);
         } else {
             Toast.makeText(this, "ERRO status " + response.code(), Toast.LENGTH_LONG).show();

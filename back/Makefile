@@ -1,7 +1,7 @@
-all: login login_main get_leagues get_leagues_main get_scores get_scores_main get_bets get_bets_main change_password_main change_password
+all: login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password bet_main bet
 
 clean:
-	rm -f login login_main get_leagues get_leagues_main get_scores get_scores_main get_bets get_bets_main change_password_main change_password *.zip
+	rm -f login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password *.zip bet_main bet
 
 login: login.go model/user.go repo/session.go repo/user.go utils/response.go
 	go build -o login login.go
@@ -24,12 +24,12 @@ get_leagues: get_leagues.go model/league.go repo/session.go repo/user.go utils/r
 get_leagues_main: get_leagues_main.go model/league.go repo/session.go repo/user.go utils/response.go utils/crypt.go
 	go build -o get_leagues_main get_leagues_main.go
 
-get_scores: get_scores.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
-	go build -o get_scores get_scores.go group_scores.go
-	zip get_scores.zip get_scores
+ranking: ranking.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
+	go build -o ranking ranking.go group_scores.go
+	zip ranking.zip ranking
 
-get_scores_main: get_scores_main.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
-	go build -o get_scores_main get_scores_main.go group_scores.go
+ranking_main: ranking_main.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
+	go build -o ranking_main ranking_main.go group_scores.go
 
 get_bets: get_bets.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
 	go build -o get_bets get_bets.go group_scores.go
@@ -37,3 +37,10 @@ get_bets: get_bets.go model/score_board.go repo/score_board.go group_scores.go u
 
 get_bets_main: get_bets_main.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
 	go build -o get_bets_main get_bets_main.go group_scores.go
+
+bet: bet.go model/score_board.go repo/score_board.go utils/crypt.go
+	go build -o bet bet.go
+	zip bet.zip bet
+
+bet_main: bet_main.go model/score_board.go repo/score_board.go utils/crypt.go
+	go build -o bet_main bet_main.go
