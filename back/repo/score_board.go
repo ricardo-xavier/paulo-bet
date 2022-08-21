@@ -1,6 +1,7 @@
 package repo
 
 import (
+    "fmt"
     "strings"
     "strconv"
     "github.com/aws/aws-sdk-go/aws"
@@ -98,6 +99,7 @@ func Initialize(svc *dynamodb.DynamoDB, leagueId string, userId string, scores [
 }
 
 func addBet(svc *dynamodb.DynamoDB, leagueId string, userId string, matchId string) {
+    fmt.Printf("PAULOBET:addBet [%s] [%s] [%s]\n", leagueId, userId, matchId)
     item := map[string]*dynamodb.AttributeValue {
         "hash": { S: aws.String(userId + "_" + matchId) },
         "sort": { S: aws.String(leagueId) },
@@ -115,6 +117,7 @@ func addBet(svc *dynamodb.DynamoDB, leagueId string, userId string, matchId stri
 }
 
 func UpdateBet(svc *dynamodb.DynamoDB, leagueId string, userId string, matchId string, home int, visitors int) {
+    fmt.Printf("PAULOBET:updBet [%s] [%s] [%s] %d %d\n", leagueId, userId, matchId, home, visitors)
     key := map[string]*dynamodb.AttributeValue {
         "hash": { S: aws.String(userId + "_" + matchId) },
         "sort": { S: aws.String(leagueId) },

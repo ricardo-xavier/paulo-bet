@@ -12,17 +12,13 @@ import (
 )
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-    fmt.Println("=====PauloBet:bet")
     leagueId := req.PathParameters["leagueId"]
     userId := req.PathParameters["userId"]
-    fmt.Println(leagueId)
-    fmt.Println(userId)
     var betRequest model.BetRequest
     err := json.Unmarshal([]byte(req.Body), &betRequest)
     if err != nil {
         panic(err)
     }
-    fmt.Println(betRequest)
     ok := utils.CheckToken(userId, betRequest.Token)
     if !ok {
         return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil

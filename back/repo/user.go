@@ -1,6 +1,7 @@
 package repo
 
 import (
+    "fmt"
     "strings"
     "github.com/aws/aws-sdk-go/aws"
     "github.com/aws/aws-sdk-go/service/dynamodb"
@@ -75,6 +76,7 @@ func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
 }
 
 func ChangePassword(svc *dynamodb.DynamoDB, login string, password string) {
+    fmt.Printf("PAULOBET:change password [%s]\n", login)
     key := map[string]*dynamodb.AttributeValue {
         "hash": { S: aws.String(login) },
         "sort": { S: aws.String("USER") },
