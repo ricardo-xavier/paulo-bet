@@ -20,7 +20,7 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
     }
     svc := repo.Connect()
-    scores := repo.GetScores(svc, leagueId, nil)
+    scores := repo.GetScores(svc, leagueId, nil, login)
     scores = repo.Initialize(svc, leagueId, login, scores)
     grouped := GroupByUser(scores, leagueId, login)
     var ranking []model.Ranking

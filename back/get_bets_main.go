@@ -10,8 +10,8 @@ func main() {
     leagueId := os.Args[1]
     userId := os.Args[2]
     svc := repo.Connect()
-    userScores := repo.GetScores(svc, leagueId, &userId)
-    leagueScores := repo.GetScores(svc, leagueId, &leagueId)
+    userScores := repo.GetScores(svc, leagueId, &userId, userId)
+    leagueScores := repo.GetScores(svc, leagueId, &leagueId, userId)
     scores := userScores
     for _, score := range(leagueScores) {
         scores = append(scores, score)

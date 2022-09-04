@@ -19,17 +19,22 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
     u := make(map[string]int)
     for i, _ := range(scores) {
         userId := scores[i].UserId
+        loc, _ := time.LoadLocation("America/Sao_Paulo")
+        currentTime := time.Now().In(loc)
+        date := currentTime.Format("2006-01-02 15:04:05")
+        matchId := scores[i].MatchId
+        admin := m[matchId]
+        add := date >= admin.Date
         if userId != login {
             scores[i].Editable = false
         } else {
-            matchId := scores[i].MatchId
-            admin := m[matchId]
-            loc, _ := time.LoadLocation("America/Sao_Paulo")
-            currentTime := time.Now().In(loc)
-            date := currentTime.Format("2006-01-02 15:04:05")
-            scores[i].Editable = date < admin.Date
+            if login != leagueId {
+                scores[i].Editable = date < admin.Date
+            } else {
+                scores[i].Editable = true
+            }
         }
-        if userId != leagueId {
+        if userId != leagueId || login == leagueId {
             n := u[userId]
             matchId := scores[i].MatchId
             admin := m[matchId]
@@ -55,12 +60,14 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
                 matches++
             }
 
-            if matches == 2 {
-                n = n + 10
-            } else if wUser == wAdmin {
-                n = n + 3 + (matches * 2)
-            } else {
-                n = n + matches
+            if add {
+                if matches == 2 {
+                    n = n + 10
+                } else if wUser == wAdmin {
+                    n = n + 3 + (matches * 2)
+                } else {
+                    n = n + matches
+                }
             }
 
             scores[i].Date = admin.Date[5:16]

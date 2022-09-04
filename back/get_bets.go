@@ -22,13 +22,13 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
     }
     svc := repo.Connect()
-    userScores := repo.GetScores(svc, leagueId, &userId)
-    leagueScores := repo.GetScores(svc, leagueId, &leagueId)
+    userScores := repo.GetScores(svc, leagueId, &userId, login)
+    leagueScores := repo.GetScores(svc, leagueId, &leagueId, login)
     scores := userScores
     for _, score := range(leagueScores) {
         scores = append(scores, score)
     }
-    GroupByUser(scores, leagueId, userId)
+    GroupByUser(scores, leagueId, login)
     userScores = nil
     for _, score := range(scores) {
         if score.UserId == userId {

@@ -10,7 +10,7 @@ import (
     "back/model"
 )
 
-func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string) []model.ScoreBoard {
+func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string, login string) []model.ScoreBoard {
     var scores []model.ScoreBoard
 
 	sort := expression.Key("sort").Equal(expression.Value(leagueId))
@@ -55,6 +55,9 @@ func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string) []model.
         }
         if i["date"] != nil {
             scoreBoard.Date = *i["date"].S
+            if strings.HasSuffix(scoreBoard.Date, ":00") {
+                scoreBoard.Date = scoreBoard.Date[0:len(scoreBoard.Date)-3]
+            }
         }
 		scores = append(scores, scoreBoard)
 	}
