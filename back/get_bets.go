@@ -25,8 +25,10 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     userScores := repo.GetScores(svc, leagueId, &userId, login)
     leagueScores := repo.GetScores(svc, leagueId, &leagueId, login)
     scores := userScores
-    for _, score := range(leagueScores) {
-        scores = append(scores, score)
+    if login != leagueId {
+        for _, score := range(leagueScores) {
+            scores = append(scores, score)
+        }
     }
     GroupByUser(scores, leagueId, login)
     userScores = nil

@@ -17,7 +17,10 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     token := req.QueryStringParameters["token"]
     ok := utils.CheckToken(login, token)
     if !ok {
-        return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
+        resp := utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized)
+        resp.Headers = make(map[string]string)
+        resp.Headers["Access-Control-Allow-Origin"] = "*"
+        return resp, nil
     }
     svc := repo.Connect()
     scores := repo.GetScores(svc, leagueId, nil, login)
@@ -38,10 +41,13 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     if err != nil {
         panic(err)
     }
-    return events.APIGatewayProxyResponse {
+    resp := events.APIGatewayProxyResponse {
         Body: string(body),
         StatusCode: http.StatusOK,
-    }, nil
+    }
+    resp.Headers = make(map[string]string)
+    resp.Headers["Access-Control-Allow-Origin"] = "*"
+    return resp, nil
 }
 
 func main() {

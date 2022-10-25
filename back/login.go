@@ -20,10 +20,16 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     svc := repo.Connect()
     userEntity := repo.GetUser(svc, loginRequest.Login)
     if userEntity == nil {
-        return utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Login), http.StatusNotFound), nil
+        resp := utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Login), http.StatusNotFound)
+        resp.Headers = make(map[string]string)
+        resp.Headers["Access-Control-Allow-Origin"] = "*"
+        return resp, nil
     }
     if userEntity.Password != utils.Crypt(loginRequest.Password) && !(userEntity.Password == "" && loginRequest.Password == "") {
-        return utils.ErrorResponse(fmt.Errorf("Invalid password"), http.StatusBadRequest), nil
+        resp := utils.ErrorResponse(fmt.Errorf("Invalid password"), http.StatusBadRequest)
+        resp.Headers = make(map[string]string)
+        resp.Headers["Access-Control-Allow-Origin"] = "*"
+        return resp, nil
     }
     loginResponse := model.LoginResponse {
         UserName: userEntity.Name,
@@ -33,10 +39,13 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     if err != nil {
         panic(err)
     }
-    return events.APIGatewayProxyResponse {
+    resp := events.APIGatewayProxyResponse {
         Body: string(body),
         StatusCode: http.StatusOK,
-    }, nil
+    }
+    resp.Headers = make(map[string]string)
+    resp.Headers["Access-Control-Allow-Origin"] = "*"
+    return resp, nil
 }
 
 func main() {

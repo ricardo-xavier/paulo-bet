@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>PauloBet</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="login.js"></script>
+        <script src="leagues.js"></script>
+        <script src="ranking.js"></script>
+        <script>
+            function getUser() {
+                console.log("get cookie");
+                console.log(document.cookie);
+                if (document.cookie) {
+                    prms = document.cookie.split("=");
+                    if (prms && prms.length == 2) {
+                        user = document.getElementById("user");
+                        user.value = prms[1];
+                    }
+                }
+            }
+
+            function forceLower(strInput) {
+                strInput.value = strInput.value.toLowerCase();
+            }
+        </script>
+    </head>
+    <body id="body" onload="getUser()">
+        <div id="login_div" style="display: block">
+            <center>
+                <h1>PauloBet</h1>
+                <input type="text" id="user" class="form-control" placeholder="user" onkeyup="return forceLower(this)";><br>
+                <input type="password" id="password" class="form-control" placeholder="password"><br>
+                <input type="button" class="btn btn-primary" value="Login" onclick="login()">
+            </center>
+        </div>
+        <div id="leagues_div" style="display: none">
+            <center>
+                <h3>Selecione um Bol&atilde;o</h3>
+                <div class="container" id="leagues">
+                </div>
+            </center>
+        </div>
+        <div id="ranking_div" style="display: none">
+            <center>
+                <h3>Ranking</h3>
+                <div class="container" id="ranking">
+                </div>
+            </center>
+        </div>
+    <body>
+</html>
