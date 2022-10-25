@@ -21,13 +21,19 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     }
     ok := utils.CheckToken(userId, betRequest.Token)
     if !ok {
-        return utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized), nil
+        resp := utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized)
+        resp.Headers = make(map[string]string)
+        resp.Headers["Access-Control-Allow-Origin"] = "*"
+        return resp, nil
     }
     svc := repo.Connect()
     repo.UpdateBet(svc, leagueId, userId, betRequest.MatchId, betRequest.Home, betRequest.Visitors)
-    return events.APIGatewayProxyResponse {
+    resp := events.APIGatewayProxyResponse {
         StatusCode: http.StatusNoContent,
-    }, nil
+    }
+    resp.Headers = make(map[string]string)
+    resp.Headers["Access-Control-Allow-Origin"] = "*"
+    return resp, nil
 }
 
 func main() {

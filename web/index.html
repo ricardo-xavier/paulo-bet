@@ -9,10 +9,12 @@
         <script src="login.js"></script>
         <script src="leagues.js"></script>
         <script src="ranking.js"></script>
+        <script src="bets.js"></script>
+        <script src="bet.js"></script>
+        <script src="utils.js"></script>
+        <script src="password.js"></script>
         <script>
             function getUser() {
-                console.log("get cookie");
-                console.log(document.cookie);
                 if (document.cookie) {
                     prms = document.cookie.split("=");
                     if (prms && prms.length == 2) {
@@ -28,26 +30,63 @@
         </script>
     </head>
     <body id="body" onload="getUser()">
+        <input type="hidden" id="user_hidden">
+        <input type="hidden" id="token_hidden">
         <div id="login_div" style="display: block">
             <center>
                 <h1>PauloBet</h1>
-                <input type="text" id="user" class="form-control" placeholder="user" onkeyup="return forceLower(this)";><br>
-                <input type="password" id="password" class="form-control" placeholder="password"><br>
+                <input type="text" id="user" class="form-control" placeholder="usuario" onkeyup="return forceLower(this)";><br>
+                <input type="password" id="password" class="form-control" placeholder="senha"><br>
                 <input type="button" class="btn btn-primary" value="Login" onclick="login()">
             </center>
         </div>
         <div id="leagues_div" style="display: none">
             <center>
-                <h3>Selecione um Bol&atilde;o</h3>
+                <hr>
                 <div class="container" id="leagues">
                 </div>
+                <input type="button" class="btn btn-primary" value="Alterar Senha" onclick="changePassword()">
             </center>
         </div>
         <div id="ranking_div" style="display: none">
             <center>
-                <h3>Ranking</h3>
+                <hr>
                 <div class="container" id="ranking">
                 </div>
+                <input type="button" class="btn btn-warning" value="Voltar" onclick="backToLeagues()">
+            </center>
+        </div>
+        <div id="bets_div" style="display: none">
+            <center>
+                <hr>
+                <div class="container" id="bets">
+                </div>
+                <input type="button" class="btn btn-warning" value="Voltar" onclick="backToRanking()">
+            </center>
+        </div>
+        <div id="bet_div" style="display: none">
+            <center>
+                <br>
+                <label for="home" id="home_lbl">XXX </label>
+                <input type="number" id="home" min="0" max="10" step="1" value="0">
+                <br>
+                <br>
+                <label for="visitors" id="visitors_lbl">XXX </label>
+                <input type="number" id="visitors" min="0" max="10" step="1" value="0">
+                <br>
+                <br>
+                <input type="button" class="btn btn-primary" value="Confirma" onclick="confirm()">
+                <input type="button" class="btn btn-danger" value="Cancela" onclick="cancel()">
+            </center>
+        </div>
+        <div id="password_div" style="display: none">
+            <center>
+                <br>
+                <input type="password" id="password_1" class="form-control" placeholder="nova senha"><br>
+                <input type="password" id="password_2" class="form-control" placeholder="repetir nova senha"><br>
+                <br>
+                <input type="button" class="btn btn-primary" value="Confirma" onclick="confirmPassword()">
+                <input type="button" class="btn btn-danger" value="Cancela" onclick="cancelPassword()">
             </center>
         </div>
     <body>

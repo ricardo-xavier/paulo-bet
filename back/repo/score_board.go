@@ -106,8 +106,8 @@ func addBet(svc *dynamodb.DynamoDB, leagueId string, userId string, matchId stri
     item := map[string]*dynamodb.AttributeValue {
         "hash": { S: aws.String(userId + "_" + matchId) },
         "sort": { S: aws.String(leagueId) },
-        "home": { N: aws.String("0") },
-        "visitors": { N: aws.String("0") },
+        "home": { N: aws.String("9") },
+        "visitors": { N: aws.String("9") },
     }
 	params := &dynamodb.PutItemInput{
 		Item:      item,

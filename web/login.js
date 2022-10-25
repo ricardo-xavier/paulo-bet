@@ -7,14 +7,12 @@ function login() {
         console.log(this.responseText);
         if (this.readyState == 4) {
             if (this.status == 200) {
-                var user = document.getElementById("user").value;
-                document.cookie = "user=" + user +  "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-                console.log("set cookie");
-                console.log(document.cookie);
+                var login = document.getElementById("user").value;
+                document.cookie = "user=" + login +  "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
                 var response = JSON.parse(this.responseText)
-                leagues(user, response.token);
+                leagues(login, response.token);
             } else {
-                alert(this.status + " " + this.responseText)
+                alert("Erro " + this.status + " " + this.responseText)
             }
         }
     }

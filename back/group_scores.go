@@ -27,7 +27,9 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
         add := date >= admin.Date
         if userId != login {
             scores[i].Editable = false
+            scores[i].Visible = date >= admin.Date
         } else {
+            scores[i].Visible = true
             if login != leagueId {
                 scores[i].Editable = date < admin.Date
             } else {
