@@ -18,6 +18,7 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         panic(err)
     }
     svc := repo.Connect()
+    fmt.Printf("login %s\n", loginRequest.Login);
     userEntity := repo.GetUser(svc, loginRequest.Login)
     if userEntity == nil {
         resp := utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Login), http.StatusNotFound)

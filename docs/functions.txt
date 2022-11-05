@@ -1,0 +1,112 @@
+{
+    "Functions": [
+        {
+            "FunctionName": "paulobet-login",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-login",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-login-role-63twa92q",
+            "Handler": "login",
+            "CodeSize": 7198419,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-10-27T22:25:38.000+0000",
+            "CodeSha256": "iDK461hj7kpJi9poMnpiRi8acKrPIzjw+i/Xjmk2fOk=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "2715a669-9181-4149-80e7-4f2780f31718"
+        },
+        {
+            "FunctionName": "paulobet-ranking",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-ranking",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-login-role-63twa92q",
+            "Handler": "ranking",
+            "CodeSize": 7274659,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-11-05T22:17:21.000+0000",
+            "CodeSha256": "isPx0Fi6TCbX1mQlGx89BrTfITGzBYJ0VStfGkK3740=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "bc12302c-35b3-48cb-ad48-83142d15ef1e"
+        },
+        {
+            "FunctionName": "paulobet-bets",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-bets",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-bets-role-7lc97hft",
+            "Handler": "get_bets",
+            "CodeSize": 7271285,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-11-05T21:18:04.000+0000",
+            "CodeSha256": "3nBeeqWI4BVQr3bqEeXHE1G8iRj4XUYqO/lTZh+Y5D4=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "7443bfc8-cae9-4a16-a5eb-6700cc46a35f"
+        },
+        {
+            "FunctionName": "paulobet-get-leagues",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-get-leagues",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-get-leagues-role-ecyb7vg6",
+            "Handler": "get_leagues",
+            "CodeSize": 7256869,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-11-05T18:36:47.000+0000",
+            "CodeSha256": "7wCkMXGHJAzxA/HvuLLOqNm0rrgPoEL8SAD2EpJv7Lg=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "30509858-bc0c-469a-9a2a-8e6a0d445ed1"
+        },
+        {
+            "FunctionName": "paulobet-change-password",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-change-password",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-change-password-role-5fs3ut1j",
+            "Handler": "change_password",
+            "CodeSize": 7153751,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-10-25T18:31:52.000+0000",
+            "CodeSha256": "aMFz8hlRYgAQXtQwN2HJ5hqlVifu9F9puczsf3hFKBk=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "c510b6c4-3b35-4a49-9aa2-f8668be1b582"
+        },
+        {
+            "FunctionName": "paulobet-bet",
+            "FunctionArn": "arn:aws:lambda:sa-east-1:283574274299:function:paulobet-bet",
+            "Runtime": "go1.x",
+            "Role": "arn:aws:iam::283574274299:role/service-role/paulobet-bet-role-oojx48qc",
+            "Handler": "bet",
+            "CodeSize": 7151796,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 512,
+            "LastModified": "2022-11-05T18:37:28.000+0000",
+            "CodeSha256": "GGeLJBOaq9rFi5a7v73IrZRafPg+QZn+NZoTRL0Z6YQ=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "34770113-039e-451b-b1b4-d3ba8737eca3"
+        }
+    ]
+}

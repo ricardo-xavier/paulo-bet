@@ -41,7 +41,7 @@ func GetUser(svc *dynamodb.DynamoDB, login string) *model.User {
 func GetUserLeagues(svc *dynamodb.DynamoDB, userId string) []model.League {
     var leagues []model.League
 	sort := expression.Key("sort").Equal(expression.Value("LEAGUE"))
-	hash := expression.Key("hash").BeginsWith(userId)
+	hash := expression.Key("hash").BeginsWith(userId + "_")
 
 	proj := expression.NamesList(expression.Name("hash"))
 

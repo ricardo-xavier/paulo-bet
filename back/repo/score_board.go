@@ -20,8 +20,15 @@ func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string, login st
         expression.Name("visitors"))
 
     if userId != nil {
-	    hash := expression.Key("hash").BeginsWith(*userId + "_")
-	    sort = expression.KeyAnd(sort, hash)
+        if *userId == leagueId {
+            leaguePrefix := strings.Split(leagueId, "-")[0]
+	        sort = expression.Key("sort").Equal(expression.Value(leaguePrefix))
+	        hash := expression.Key("hash").BeginsWith(leaguePrefix + "_")
+	        sort = expression.KeyAnd(sort, hash)
+        } else {
+	        hash := expression.Key("hash").BeginsWith(*userId + "_")
+	        sort = expression.KeyAnd(sort, hash)
+        }
     }
 
 	expr, err := expression.NewBuilder().WithKeyCondition(sort).WithProjection(proj).Build()
@@ -66,13 +73,14 @@ func GetScores(svc *dynamodb.DynamoDB, leagueId string, userId *string, login st
 }
 
 func Initialize(svc *dynamodb.DynamoDB, leagueId string, userId string, scores []model.ScoreBoard) []model.ScoreBoard {
+    leaguePrefix := strings.Split(leagueId, "-")[0]
     var adminBets []model.ScoreBoard
     var userBets []model.ScoreBoard
     for _, score := range(scores) {
         if score.UserId == userId {
             userBets = append(userBets, score)
         }
-        if score.UserId == leagueId {
+        if score.UserId == leaguePrefix {
             adminBets = append(adminBets, score)
         }
     }

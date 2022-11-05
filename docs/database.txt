@@ -1,0 +1,36 @@
+PAULOBET
+    
+{
+ "hash": "LOGIN",
+ "sort": "USER",
+ "name": "NAME",
+ "password": "PASSWORD"
+}
+
+{
+ "hash": "USER_LEAGUE",
+ "sort": "LEAGUE"
+}
+
+{
+ "hash": "USER_MATCH",
+ "sort": "LEAGUE",
+ "home": 9,
+ "visitors": 9
+}
+
+{
+ "hash": "LEAGUE_MATCH",
+ "sort": "LEAGUE",
+ "date": "2022-10-29 17:00:00", 
+ "home": 9,
+ "visitors": 9
+}
+
+GetUser - hash=login sort=USER
+
+GetUserLeagues - hash=login* sort=LEAGUE
+
+GetScores - sort=LEAGUE
+
+GetScores(league) - sort=LEAGUE hash=leaguePrefix

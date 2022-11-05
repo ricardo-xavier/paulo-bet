@@ -23,7 +23,12 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         return resp, nil
     }
     svc := repo.Connect()
-    scores := repo.GetScores(svc, leagueId, nil, login)
+    usersScores := repo.GetScores(svc, leagueId, nil, login)
+    leagueScores := repo.GetScores(svc, leagueId, &leagueId, login)
+    scores := usersScores
+    for _, score := range(leagueScores) {
+        scores = append(scores, score)
+    }
     scores = repo.Initialize(svc, leagueId, login, scores)
     grouped := GroupByUser(scores, leagueId, login)
     var ranking []model.Ranking

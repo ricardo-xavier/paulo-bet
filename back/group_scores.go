@@ -2,16 +2,18 @@ package main
 
 import (
     "sort"
+    "strings"
     "time"
     "back/model"
 )
 
 func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []model.ScoreBoard {
     m := make(map[string]model.ScoreBoard)
+    leaguePrefix := strings.Split(leagueId, "-")[0]
     for _, scoreBoard := range(scores) {
         userId := scoreBoard.UserId
-        if userId == leagueId {
-            matchId := scoreBoard.MatchId
+        if userId == leaguePrefix {
+            matchId := strings.Split(scoreBoard.MatchId, "-")[0]
             m[matchId] = scoreBoard
         }
     }
@@ -22,7 +24,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
         loc, _ := time.LoadLocation("America/Sao_Paulo")
         currentTime := time.Now().In(loc)
         date := currentTime.Format("2006-01-02 15:04:05")
-        matchId := scores[i].MatchId
+        matchId := strings.Split(scores[i].MatchId, "-")[0]
         admin := m[matchId]
         add := date >= admin.Date
         if userId != login {
@@ -38,7 +40,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
         }
         if userId != leagueId || login == leagueId {
             n := u[userId]
-            matchId := scores[i].MatchId
+            matchId := strings.Split(scores[i].MatchId, "-")[0]
             admin := m[matchId]
 
             wAdmin := 0
@@ -53,6 +55,9 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
             } else if scores[i].Home < scores[i].Visitors {
                 wUser = -1
             }
+            if scores[i].Home == 9 && scores[i].Visitors == 9 {
+                wUser = -2
+            }
 
             matches := 0
             if scores[i].Home == admin.Home {
@@ -62,7 +67,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
                 matches++
             }
 
-            if add {
+            if add && wUser != -2 {
                 if matches == 2 {
                     n = n + 10
                 } else if wUser == wAdmin {
@@ -80,11 +85,13 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
 
     var list []model.ScoreBoard
     for k, v := range(u) {
-        score := model.ScoreBoard {
-            UserId: k,
-            Score: v,
+        if k != leaguePrefix {
+            score := model.ScoreBoard {
+                UserId: k,
+                Score: v,
+            }
+            list = append(list, score)
         }
-        list = append(list, score)
     }
 
     sort.SliceStable(list, func(i, j int) bool {

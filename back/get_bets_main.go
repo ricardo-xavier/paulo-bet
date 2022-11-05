@@ -19,6 +19,8 @@ func main() {
     }
     fmt.Println(len(userScores))
     fmt.Println(userScores)
+    fmt.Println(len(leagueScores))
+    fmt.Println(leagueScores)
     GroupByUser(scores, leagueId, userId)
     userScores = nil
     for _, score := range(scores) {
