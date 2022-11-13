@@ -32,7 +32,7 @@
     <body id="body" onload="getUser()">
         <input type="hidden" id="user_hidden">
         <input type="hidden" id="token_hidden">
-        <div id="login_div" style="display: block">
+        <div id="login_div" style="display: block; margin: 25px 25px">
             <center>
                 <h1>PauloBet</h1>
                 <input type="text" id="user" class="form-control" placeholder="usuario" onkeyup="return forceLower(this)";><br>
@@ -67,13 +67,16 @@
         <div id="bet_div" style="display: none">
             <center>
                 <br>
-                <label for="home" id="home_lbl">XXX </label>
-                <input type="number" id="home" min="0" max="10" step="1" value="0">
-                <br>
-                <br>
-                <label for="visitors" id="visitors_lbl">XXX </label>
-                <input type="number" id="visitors" min="0" max="10" step="1" value="0">
-                <br>
+                <table>
+                    <tr>
+                        <td style="padding: 10px"><label for="home" id="home_lbl">XXX </label></td>
+                        <td style="padding: 10px"><input type="number" id="home" min="0" max="10" step="1" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px"><label for="visitors" id="visitors_lbl">XXX </label></td>
+                        <td style="padding: 10px"><input type="number" id="visitors" min="0" max="10" step="1" value="0"></td>
+                    </tr>
+                </table>
                 <br>
                 <input type="button" class="btn btn-primary" value="Confirma" onclick="confirm()">
                 <input type="button" class="btn btn-danger" value="Cancela" onclick="cancel()">

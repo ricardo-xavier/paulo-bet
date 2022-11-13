@@ -2,7 +2,7 @@ function changePassword(login, token) {
     var leaguesDiv = document.getElementById("leagues_div");
     leaguesDiv.style = "display: none";
     var passwordDiv = document.getElementById("password_div");
-    passwordDiv.style = "display: block";
+    passwordDiv.style = "display: block; margin: 25px 25px";
 }
 
 function confirmPassword() {
@@ -54,7 +54,7 @@ function cancelPassword() {
 
 function hide() {
     var leaguesDiv = document.getElementById("leagues_div");
-    leaguesDiv.style = "display: block";
+    leaguesDiv.style = "display: block; margin: 25px 25px";
     var passwordDiv = document.getElementById("password_div");
     passwordDiv.style = "display: none";
 }

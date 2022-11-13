@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
@@ -14,6 +15,10 @@ import (
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     leagueId := req.PathParameters["leagueId"]
     userId := req.PathParameters["userId"]
+    leaguePrefix := strings.Split(leagueId, "-")[0]
+    if userId == leaguePrefix {
+        leagueId = leaguePrefix
+    }
     var betRequest model.BetRequest
     err := json.Unmarshal([]byte(req.Body), &betRequest)
     if err != nil {

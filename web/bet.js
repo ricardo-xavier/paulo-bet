@@ -4,6 +4,25 @@ var login;
 var token;
 
 function updateBet(pBet, pLeague, pLogin, pToken) {
+    var dict = {
+        "ARG": "Argentina",
+        "AUS": "Austrália",
+        "GAL": "Gales",
+        "DEN": "Dinamarca",
+        "ECU": "Ecuador",
+        "ENG": "Inglaterra",
+        "FRA": "França",
+        "HOL": "Holanda",
+        "IRN": "Irã",
+        "KSA": "Arábia Saudita",
+        "MEX": "México",
+        "POL": "Polônia",
+        "QAT": "Catar",
+        "SEN": "Senegal",
+        "TUN": "Tunísia",
+        "USA": "Estados Unidos"
+    };
+
     console.log("bets")
     bet = pBet;
     league = pLeague;
@@ -19,10 +38,10 @@ function updateBet(pBet, pLeague, pLogin, pToken) {
     betDiv.style = "display: block";
 
     var homeLbl = document.getElementById("home_lbl");
-    homeLbl.innerHTML = bet.matchId.split("-")[0];
+    homeLbl.innerHTML = bet.matchId.split("-")[0] + "-" + dict[bet.matchId.split("-")[0]];
 
     var visitorsLbl = document.getElementById("visitors_lbl");
-    visitorsLbl.innerHTML = bet.matchId.split("-")[1];
+    visitorsLbl.innerHTML = bet.matchId.split("-")[1] + "-" + dict[bet.matchId.split("-")[1]];
 
     var home = document.getElementById("home");
     home.value = bet.home;

@@ -5,7 +5,7 @@ function leagues(login, token) {
     var loginDiv = document.getElementById("login_div");
     loginDiv.style = "display: none";
     var leaguesDiv = document.getElementById("leagues_div");
-    leaguesDiv.style = "display: block";
+    leaguesDiv.style = "display: block; margin: 25px 25px";
 
     removeChildren("leagues");
 
