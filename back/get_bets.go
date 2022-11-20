@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "sort"
+    "strings"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
@@ -14,8 +15,8 @@ import (
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     leagueId := req.PathParameters["leagueId"]
-    userId := req.PathParameters["userId"]
-    login := req.QueryStringParameters["login"]
+    userId := strings.ToLower(req.PathParameters["userId"])
+    login := strings.ToLower(req.QueryStringParameters["login"])
     token := req.QueryStringParameters["token"]
     ok := utils.CheckToken(login, token)
     if !ok {

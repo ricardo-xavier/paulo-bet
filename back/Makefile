@@ -1,8 +1,8 @@
 #https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_de_pa%C3%ADs_da_FIFA
-all: login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password bet_main bet
+all: login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password bet_main bet 
 
 clean:
-	rm -f login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password *.zip bet_main bet
+	rm -f login login_main get_leagues get_leagues_main ranking ranking_main get_bets get_bets_main change_password_main change_password *.zip bet_main bet 
 
 login: login.go model/user.go repo/session.go repo/user.go utils/response.go
 	go build -o login login.go

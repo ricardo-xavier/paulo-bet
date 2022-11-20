@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "os"
+    "sort"
     "back/repo"
 )
 
@@ -17,10 +18,10 @@ func main() {
     for _, score := range(leagueScores) {
         scores = append(scores, score)
     }
-    fmt.Println(len(userScores))
-    fmt.Println(userScores)
-    fmt.Println(len(leagueScores))
-    fmt.Println(leagueScores)
+    //fmt.Println(len(userScores))
+    //fmt.Println(userScores)
+    //fmt.Println(len(leagueScores))
+    //fmt.Println(leagueScores)
     GroupByUser(scores, leagueId, userId)
     userScores = nil
     for _, score := range(scores) {
@@ -28,6 +29,12 @@ func main() {
             userScores = append(userScores, score)
         }
     }
-    fmt.Println(len(userScores))
-    fmt.Println(userScores)
+    //fmt.Println(len(userScores))
+    //fmt.Println(userScores)
+    sort.SliceStable(userScores, func(i, j int) bool {
+        return userScores[i].Date < userScores[j].Date
+    })
+    for i, s := range(userScores) {
+        fmt.Printf("%d %v %v\n", i, s.Date, s)
+    }
 }

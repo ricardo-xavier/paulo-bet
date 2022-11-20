@@ -13,7 +13,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
     for _, scoreBoard := range(scores) {
         userId := scoreBoard.UserId
         if userId == leaguePrefix {
-            matchId := strings.Split(scoreBoard.MatchId, "-")[0]
+            matchId := scoreBoard.MatchId
             m[matchId] = scoreBoard
         }
     }
@@ -24,7 +24,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
         loc, _ := time.LoadLocation("America/Sao_Paulo")
         currentTime := time.Now().In(loc)
         date := currentTime.Format("2006-01-02 15:04:05")
-        matchId := strings.Split(scores[i].MatchId, "-")[0]
+        matchId := scores[i].MatchId
         admin := m[matchId]
         add := date >= admin.Date
         if userId != login {
@@ -40,7 +40,7 @@ func GroupByUser(scores []model.ScoreBoard, leagueId string, login string) []mod
         }
         if userId != leagueId || login == leagueId {
             n := u[userId]
-            matchId := strings.Split(scores[i].MatchId, "-")[0]
+            matchId := scores[i].MatchId
             admin := m[matchId]
 
             wAdmin := 0

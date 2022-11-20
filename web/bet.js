@@ -7,20 +7,36 @@ function updateBet(pBet, pLeague, pLogin, pToken) {
     var dict = {
         "ARG": "Argentina",
         "AUS": "Austrália",
-        "GAL": "Gales",
+        "BEL": "Bélgica",
+        "BRA": "Brasil",
+        "GAN": "Canadá",
+        "CMR": "Camarões",
+        "CRC": "Costa Rica",
+        "CRO": "Croácia",
         "DEN": "Dinamarca",
         "ECU": "Ecuador",
         "ENG": "Inglaterra",
+        "ESP": "Espanha",
         "FRA": "França",
+        "GER": "Alemanha",
+        "GHA": "Gana",
         "HOL": "Holanda",
         "IRN": "Irã",
+        "JPN": "Japão",
+        "KDR": "Coréia do Sul",
         "KSA": "Arábia Saudita",
+        "MAR": "Marrocos",
         "MEX": "México",
         "POL": "Polônia",
+        "POR": "Portugal",
         "QAT": "Catar",
         "SEN": "Senegal",
+        "SRB": "Sérvia",
+        "SUI": "Suiça",
         "TUN": "Tunísia",
-        "USA": "Estados Unidos"
+        "USA": "Estados Unidos",
+        "URU": "Uruguai",
+        "WAL": "Gales"
     };
 
     console.log("bets")

@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
@@ -18,23 +19,26 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         panic(err)
     }
     svc := repo.Connect()
-    fmt.Printf("login %s\n", loginRequest.Login);
-    userEntity := repo.GetUser(svc, loginRequest.Login)
+    login := strings.ToLower(loginRequest.Login)
+    fmt.Printf("DEBUG login %s\n", login);
+    userEntity := repo.GetUser(svc, login)
     if userEntity == nil {
-        resp := utils.ErrorResponse(fmt.Errorf("%s", loginRequest.Login), http.StatusNotFound)
+        resp := utils.ErrorResponse(fmt.Errorf("%s", login), http.StatusNotFound)
         resp.Headers = make(map[string]string)
         resp.Headers["Access-Control-Allow-Origin"] = "*"
+        fmt.Printf("DEBUG login %s not found\n", login);
         return resp, nil
     }
     if userEntity.Password != utils.Crypt(loginRequest.Password) && !(userEntity.Password == "" && loginRequest.Password == "") {
         resp := utils.ErrorResponse(fmt.Errorf("Invalid password"), http.StatusBadRequest)
         resp.Headers = make(map[string]string)
         resp.Headers["Access-Control-Allow-Origin"] = "*"
+        fmt.Printf("DEBUG login %s invalid password\n", login);
         return resp, nil
     }
     loginResponse := model.LoginResponse {
         UserName: userEntity.Name,
-        Token: utils.BuildToken(loginRequest.Login),
+        Token: utils.BuildToken(login),
     }
     body, err := json.Marshal(loginResponse)
     if err != nil {
@@ -46,6 +50,7 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     }
     resp.Headers = make(map[string]string)
     resp.Headers["Access-Control-Allow-Origin"] = "*"
+    fmt.Printf("DEBUG login %s success\n", login);
     return resp, nil
 }
 

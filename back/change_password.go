@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
     "net/http"
     "encoding/json"
     "github.com/aws/aws-lambda-go/events"
@@ -17,7 +18,8 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
     if err != nil {
         panic(err)
     }
-    ok := utils.CheckToken(changePasswordRequest.Login, changePasswordRequest.Token)
+    login := strings.ToLower(changePasswordRequest.Login)
+    ok := utils.CheckToken(login, changePasswordRequest.Token)
     if !ok {
         resp := utils.ErrorResponse(fmt.Errorf("Invalid token"), http.StatusUnauthorized)
         resp.Headers = make(map[string]string)
@@ -25,7 +27,7 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         return resp, nil
     }
     svc := repo.Connect()
-    repo.ChangePassword(svc, changePasswordRequest.Login, utils.Crypt(changePasswordRequest.Password))
+    repo.ChangePassword(svc, login, utils.Crypt(changePasswordRequest.Password))
     resp := events.APIGatewayProxyResponse {
         StatusCode: http.StatusNoContent,
     }

@@ -14,7 +14,7 @@ import (
 
 func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     leagueId := req.PathParameters["leagueId"]
-    userId := req.PathParameters["userId"]
+    userId := strings.ToLower(req.PathParameters["userId"])
     leaguePrefix := strings.Split(leagueId, "-")[0]
     if userId == leaguePrefix {
         leagueId = leaguePrefix
@@ -31,6 +31,7 @@ func HandleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
         resp.Headers["Access-Control-Allow-Origin"] = "*"
         return resp, nil
     }
+    fmt.Printf("DEBUG bet %v %v %v %v %v\n", leagueId, userId, betRequest.MatchId, betRequest.Home, betRequest.Visitors);
     svc := repo.Connect()
     repo.UpdateBet(svc, leagueId, userId, betRequest.MatchId, betRequest.Home, betRequest.Visitors)
     resp := events.APIGatewayProxyResponse {
