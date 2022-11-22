@@ -39,9 +39,9 @@ get_bets: get_bets.go model/score_board.go repo/score_board.go group_scores.go u
 get_bets_main: get_bets_main.go model/score_board.go repo/score_board.go group_scores.go utils/crypt.go
 	go build -o get_bets_main get_bets_main.go group_scores.go
 
-bet: bet.go model/score_board.go repo/score_board.go utils/crypt.go
+bet: bet.go model/score_board.go repo/score_board.go utils/crypt.go repo/bet.go
 	go build -o bet bet.go
 	zip bet.zip bet
 
-bet_main: bet_main.go model/score_board.go repo/score_board.go utils/crypt.go
+bet_main: bet_main.go model/score_board.go repo/score_board.go utils/crypt.go repo/bet.go
 	go build -o bet_main bet_main.go
